@@ -54,6 +54,8 @@ Edit the final line of /bash/model_train.sh script to point to your directory co
 
 ```
 python ../python/ConvNet.py --path <path/to/your/train/dir/> --arch_size "$1" --lr "$2" --batch_size "$3" --model_dict <path/to/where/you/want/to/save/modelstate.pt>
+
+
 usage: ConvNet.py [-h] [--path PATH] [--batch_size BATCH_SIZE] [--lr LR]
                   [--num_epochs NUM_EPOCHS] [--arch_size ARCH_SIZE]
                   [--model_dict MODEL_DICT]
