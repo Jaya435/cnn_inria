@@ -50,12 +50,30 @@ python python/grid_search.py
 
 ### Stage Two
 
-Edit the /bash/model_train.sh script to point to your directory containing your training dataset. 
+Edit the final line of /bash/model_train.sh script to point to your directory containing your training dataset. 
 
 ```
-Give an example
-```
+python ../python/ConvNet.py --path <path/to/your/train/dir/> --arch_size "$1" --lr "$2" --batch_size "$3" --model_dict <path/to/where/you/want/to/save/modelstate.pt>
+usage: ConvNet.py [-h] [--path PATH] [--batch_size BATCH_SIZE] [--lr LR]
+                  [--num_epochs NUM_EPOCHS] [--arch_size ARCH_SIZE]
+                  [--model_dict MODEL_DICT]
 
+Main script to implement the CNN
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --path PATH           path to train directory
+  --batch_size BATCH_SIZE
+                        select batch size
+  --lr LR               learning rate for optimizer
+  --num_epochs NUM_EPOCHS
+                        Number of epochs
+  --arch_size ARCH_SIZE
+                        inital depth of convolution
+  --model_dict MODEL_DICT
+                        Path to where model is saved, extension should be .pt
+
+```
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
