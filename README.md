@@ -1,6 +1,6 @@
 # A Simple Convolutional Neural Network
 
-This project will help the user install the prerequisites neccessary to install a working CNN on their machine. The CNN here has been built using pytorch and the correct version is needed to ensure it works correctly. 
+This project will help the user install the prerequisites neccessary to install a working CNN on their machine. The CNN here has been built using pytorch and the correct version is needed to ensure it works correctly.  
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -10,6 +10,10 @@ These instructions will get you a copy of the project up and running on your loc
 For this to work you need Anaconda version 5.0.1. Archived Anaconda repos can be found here. Download and install the correct version for your machine.
 
 https://repo.continuum.io/archive/
+
+User should have a directory containing:
+1. director named 'images' containing named RGB images
+2. directory named 'gt' containing ground truth labels of said images, named the same.
 
 ### Installing
 
@@ -30,9 +34,9 @@ conda create --name gdal --file gdal-spec-file.txt
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
+## Running the model
 
-Explain how to run the automated tests for this system
+CNN is trained using 
 
 ### Break down into end to end tests
 
