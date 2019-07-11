@@ -32,7 +32,7 @@ parser.add_argument('--path',help='path to train directory',type=str,default='/e
 parser.add_argument('--batch_size',help='select batch size', type=int,default=128)
 parser.add_argument('--lr',help='learning rate for optimizer',type=float,default=0.001)
 parser.add_argument('--num_epochs',help='Number of epochs',type=int,default=100) 
-parser.add_argument('--arch_size', help='inital depth of convolution', type=int,default=64
+parser.add_argument('--arch_size', help='inital depth of convolution', type=int,default=64)
 parser.add_argument('--model_dict',help='Path to where model is saved, extension should be .pt',type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/')
 
 class SegBlockEncoder(nn.Module):
