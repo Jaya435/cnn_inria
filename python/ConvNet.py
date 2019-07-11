@@ -27,7 +27,7 @@ from torchsummary import summary
 from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description='Main script to implement the CNN')
 parser.add_argument('--path',help='path to train directory',type=str,default='/exports/eddie/scratch/s1217815/AerialImageDataset/train/')
 parser.add_argument('--batch_size',help='select batch size', type=int,default=128)
 parser.add_argument('--lr',help='learning rate for optimizer',type=float,default=0.001)
