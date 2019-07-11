@@ -18,13 +18,14 @@ A step by step series of examples that tell you how to get a development env run
 Clone this repository:
 
 ```
-Give the example
+git clone https://github.com/s1217815-ed-19/cnn_inria.git
 ```
 
-And repeat
+Use the two specification files to ensure the correct modules are installed in each environment:
 
 ```
-until finished
+conda create --name mypytorch --file mypytorch-spec-file.txt
+conda create --name gdal --file gdal-spec-file.txt
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
