@@ -1,6 +1,8 @@
 # A Simple Convolutional Neural Network
 
-This project will help the user install the prerequisites neccessary to install a working CNN on their machine. The CNN here has been built using pytorch and the correct version is needed to ensure it works correctly.  
+This project will help the user install the prerequisites neccessary to install a working CNN on their machine. The CNN here has been built using pytorch and the correct version is needed to ensure it works correctly. The CNN has been optimised for a binary classifcation, where the ground truth raster represents a max pixel value for your feature of interest.
+
+This work has made use of the resources provided by the Edinburgh Compute and Data Facility (ECDF) (http://www.ecdf.ed.ac.uk/). The shell scripts contained within the bash directory have been created to submit jobs to the SGE engine.
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -36,19 +38,19 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the model
 
-CNN is trained using 
+CNN is trained end to end using the directory containing the RGB and ground truth images. Scripts within split the dataset into train, validation and test sets. Outputs figures depicting how training has evolved over time, model is saved after each iteration and stored in a directory that the user defines.  
 
-### Break down into end to end tests
+### Stage One
 
-Explain what these tests test and why
+This is to create a list of combinations that is then read by a shell script during model implementation. Edit the script to explore different combinations.
 
 ```
-Give an example
+python python/grid_search.py
 ```
 
-### And coding style tests
+### Stage Two
 
-Explain what these tests test and why
+Edit the /bash/model_train.sh script to point to your directory containing your training dataset. 
 
 ```
 Give an example
