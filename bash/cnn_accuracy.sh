@@ -23,4 +23,4 @@ ulimit -v
 module load anaconda/5.0.1
 source activate mypytorch
 # Run the program
-./cnn_accuracy.py
+python ../python/accuracy.py
