@@ -16,7 +16,7 @@ ulimit -v
 
 # User specified commands go below here
 module load anaconda/5.0.1
-source activate mypytorch
+source activate mypytorch2
 
 
 # Read a text file, containing a list of possible combinations#
@@ -25,4 +25,5 @@ readarray myArray < "$input"
 set -- ${myArray[$SGE_TASK_ID]}
 # submits batch job to SGE engine
 echo arch _size is "$1"
-python /python/ConvNet.py --arch_size "$1" --lr "$2" --batch_size "$3" 
+
+. ${HOME}/python/ConvNet.py --arch_size "$1" --lr "$2" --batch_size "$3" 

@@ -23,4 +23,4 @@ ulimit -v
 module load anaconda/5.0.1
 source activate mypytorch
 # Run the program
-python /python/accuracy.py
+. ${HOME}/python/accuracy.py

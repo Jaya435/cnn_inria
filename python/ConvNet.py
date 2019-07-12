@@ -26,6 +26,9 @@ import argparse
 from torchsummary import summary
 from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
+import pandas as pd
+
+
 
 parser = argparse.ArgumentParser(description='Main script to implement the CNN')
 parser.add_argument('--path',help='path to train directory',type=str,default='/exports/eddie/scratch/s1217815/AerialImageDataset/train/')
@@ -33,7 +36,7 @@ parser.add_argument('--batch_size',help='select batch size', type=int,default=12
 parser.add_argument('--lr',help='learning rate for optimizer',type=float,default=0.001)
 parser.add_argument('--num_epochs',help='Number of epochs',type=int,default=100) 
 parser.add_argument('--arch_size', help='inital depth of convolution', type=int,default=64)
-parser.add_argument('--model_dict',help='Path to where model is saved, extension should be .pt',type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/')
+parser.add_argument('--model_dict',help='Path to where model best state is saved',type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/')
 
 class SegBlockEncoder(nn.Module):
     def __init__(self,in_channel,out_channel, kernel=4,stride=2,pad=1):
@@ -160,22 +163,28 @@ class BuildingsDataset(Dataset):
 def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict):
     '''function to train the model'''
     start = time.time()
-    valid_loss_min = np.Inf 
-
+    valid_loss_min = np.Inf
+    df=pd.DataFrame(columns=['Valid Loss', 'Train Loss', 'Valid Acc', 'Train Acc'])
+    trainLossArr = []
+    validLossArr = []
+    trainAccArr = []
+    validAccArr = []
+    
     for epoch in range(1, n_epochs+1):
-
+        
         # keep track of training and validation loss
         train_loss = 0.0
         valid_loss = 0.0
-
+        correct = 0
+        total_train = 0
         ###################
         # train the model #
         ###################
         net.train()
         for info in train_loader:
-            
+            # send info to cpu or gpu depending on which is available
             data,target = info[0].to(device),info[1].to(device)
-            # move tensors to GPU if CUDA is available
+            
             # clear the gradients of all optimized variables
             optimizer.zero_grad()
             # forward pass: compute predicted outputs by passing inputs to the model
@@ -188,30 +197,46 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict
             optimizer.step()
             # update training loss
             train_loss += loss.item()*data.size(0)
+            _, predicted = torch.max(output,0)
+            target = target.long()
+            correct += (predicted == target).sum().item()
+            total_train+=target.nelement()
         train_run_loss.append(loss.item())
+        trainAcc = 100 * correct / total_train
 
         ######################    
         # validate the model #
         ######################
         net.eval()
-        for info in valid_loader:
-            data,target = info[0].to(device),info[1].to(device)
-            # move tensors to GPU if CUDA is available
-            # forward pass: compute predicted outputs by passing inputs to the model
-            output = model(data)
-            # calculate the batch loss
-            loss =  multi_class_cross_entropy_loss_torch(output, target)
-            # update average validation loss 
-            valid_loss += loss.item()*data.size(0)
+        with torch.no_grad():
+            correct=0
+            total = 0
+            for info in valid_loader:
+                data,target = info[0].to(device),info[1].to(device)
+                # move tensors to GPU if CUDA is available
+                # forward pass: compute predicted outputs by passing inputs to the model
+                output = model(data)
+                # calculate the batch loss
+                loss =  multi_class_cross_entropy_loss_torch(output, target)
+                # update average validation loss 
+                valid_loss += loss.item()*data.size(0)
+                _,predicted = torch.max(output.data,0)
+                target = target.long()
+                total += target.nelement()
+                correct += (predicted == target).sum().item()
+            validAcc = 100 * correct / total
         valid_run_loss.append(loss.item())
 
         # calculate average losses
         train_loss = train_loss/len(train_loader.dataset)
+        trainLossArr.append(train_loss)
         valid_loss = valid_loss/len(valid_loader.dataset)
-
+        validLossArr.append(valid_loss)
+        trainAccArr.append(trainAcc)
+        validAccArr.append(validAcc)
         # print training/validation statistics 
-        print('Epoch: {} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(
-            epoch, train_loss, valid_loss))
+        print('Epoch: {} \tTrain Loss: {:.6f} \tTrain Acc: {:.6f} \tValidation Loss: {:.6f} \tValid Acc{:.6f}'.format(
+            epoch, train_loss,trainAcc,  valid_loss, validAcc))
 
         # save model if validation loss has decreased
         if valid_loss <= valid_loss_min:
@@ -223,6 +248,12 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict
             valid_loss_min = valid_loss
     finish = time.time()
     print ('Time Taken for {} epochs: {}'.format(n_epochs,finish-start))
+    df['Valid Loss'] = validLossArr
+    df['Train Loss'] = trainLossArr
+    df['Valid Acc'] = validAccArr
+    df['Train Acc'] = trainAccArr
+    print(df)
+    df.to_csv('batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
     return(train_run_loss,valid_run_loss)
 
 def train_valid_test_split(image_paths, target_paths):
