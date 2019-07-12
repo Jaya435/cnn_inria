@@ -256,10 +256,10 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict
     df.to_csv('batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
     return(train_run_loss,valid_run_loss)
 
-def train_valid_test_split(image_paths, target_paths):
+def train_valid_test_split(image_paths, target_paths,batch_size):
     dataset = BuildingsDataset(image_paths, target_paths)
-    validation_split = .2
-    test_split = .1
+    validation_split = .4
+    test_split = .2
     shuffle_dataset = True
     random_seed = 42
     dataset_size = len(dataset)
@@ -276,11 +276,11 @@ def train_valid_test_split(image_paths, target_paths):
     valid_sampler = SubsetRandomSampler(val_indices)
     test_sampler = SubsetRandomSampler(val_indices)
     
-    train_loader = DataLoader(dataset,args.batch_size,num_workers=0,sampler=train_sampler)
+    train_loader = DataLoader(dataset,batch_size,num_workers=0,sampler=train_sampler)
 
-    valid_loader = DataLoader(dataset,args.batch_size,num_workers=0,sampler=valid_sampler)
+    valid_loader = DataLoader(dataset,batch_size,num_workers=0,sampler=valid_sampler)
 
-    test_loader = DataLoader(dataset, args.batch_size, num_workers=0, sampler=test_sampler)
+    test_loader = DataLoader(dataset, batch_size, num_workers=0, sampler=test_sampler)
     return (train_loader, valid_loader, test_loader)
 
 def model_eval(test_loader,net):
@@ -325,7 +325,7 @@ if __name__ == "__main__":
 
     optimizer = optim.Adam(net.parameters(), args.lr)
     
-    train_loader, valid_loader, test_loader = train_valid_test_split(image_paths, target_paths)
+    train_loader, valid_loader, test_loader = train_valid_test_split(image_paths, target_paths,args.batch_size)
     print('Data Load Successful')
     if torch.cuda.device_count() > 1:
         print("Let us use",torch.cuda.device_count(),"GPUS!")

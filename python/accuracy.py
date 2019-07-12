@@ -11,7 +11,7 @@ import torch
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--path',help='path to train directory',type=str,default='/exports/eddie/scratch/s1217815/AerialImageDataset/train/')
-parser.add_argument('--model_path', help='path to saved models'type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/')
+parser.add_argument('--model_path', help='path to saved models',type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/')
 
 
 def model_accuracy(models,image_paths, target_paths):
