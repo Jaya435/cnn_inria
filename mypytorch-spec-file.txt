@@ -2,6 +2,7 @@
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
 @EXPLICIT
+https://repo.continuum.io/pkgs/main/linux-64/_libgcc_mutex-0.1-main.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/blas-1.0-mkl.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/bzip2-1.0.6-h14c3975_5.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/ca-certificates-2019.1.23-0.tar.bz2
@@ -54,6 +55,7 @@ https://repo.continuum.io/pkgs/main/linux-64/numpy-base-1.16.3-py36hde5b4d6_0.ta
 https://repo.continuum.io/pkgs/main/linux-64/olefile-0.46-py36_0.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/opencv-3.4.2-py36h40b0b35_1.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/openssl-1.1.1b-h7b6447c_1.tar.bz2
+https://repo.continuum.io/pkgs/main/linux-64/pandas-0.24.2-py36he6710b0_0.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/pcre-8.43-he6710b0_0.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/pillow-6.0.0-py36h34e0f95_0.tar.bz2
 https://repo.continuum.io/pkgs/main/linux-64/pip-19.1.1-py36_0.tar.bz2
