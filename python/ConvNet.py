@@ -160,7 +160,7 @@ class BuildingsDataset(Dataset):
     def __len__(self):
         return len(self.image_paths)
         
-def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict):
+def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,model_dict):
     '''function to train the model'''
     start = time.time()
     valid_loss_min = np.Inf
@@ -190,7 +190,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict
             # forward pass: compute predicted outputs by passing inputs to the model
             output = model(data)
             # calculate the batch loss
-            loss = multi_class_cross_entropy_loss_torch(output, target)
+            loss = criterion(output, target)
             # backward pass: compute gradient of the loss with respect to model parameters
             loss.backward()
             # perform a single optimization step (parameter update)
@@ -217,7 +217,8 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict
                 # forward pass: compute predicted outputs by passing inputs to the model
                 output = model(data)
                 # calculate the batch loss
-                loss =  multi_class_cross_entropy_loss_torch(output, target)
+                #loss =  multi_class_cross_entropy_loss_torch(output, target)
+                loss = criterion(output,target)
                 # update average validation loss 
                 valid_loss += loss.item()*data.size(0)
                 _,predicted = torch.max(output.data,0)
@@ -253,7 +254,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,model_dict
     df['Valid Acc'] = validAccArr
     df['Train Acc'] = trainAccArr
     print(df)
-    df.to_csv('batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
+    df.to_csv('/bce_loss/batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
     return(train_run_loss,valid_run_loss)
 
 def train_valid_test_split(image_paths, target_paths,batch_size):
@@ -322,16 +323,15 @@ if __name__ == "__main__":
     train_run_loss,valid_run_loss = [],[]
 
     net = Net(cr=args.arch_size) # resets model
-
+    criterion = nn.BCELoss()
     optimizer = optim.Adam(net.parameters(), args.lr)
-    
     train_loader, valid_loader, test_loader = train_valid_test_split(image_paths, target_paths,args.batch_size)
     print('Data Load Successful')
     if torch.cuda.device_count() > 1:
         print("Let us use",torch.cuda.device_count(),"GPUS!")
         net = nn.DataParallel(net)
         net.to(device)
-        train_run_loss,valid_run_loss = train_eval(train_loader, valid_loader, args.num_epochs, net,optimizer,args.model_dict)
+        train_run_loss,valid_run_loss = train_eval(train_loader, valid_loader, args.num_epochs, net,optimizer,criterion,args.model_dict)
         plt.plot(train_run_loss,label='Training Loss')
         plt.plot(valid_run_loss,label='Validation Loss')
         plt.ylabel('Loss')
