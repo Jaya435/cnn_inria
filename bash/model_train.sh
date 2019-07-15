@@ -2,10 +2,12 @@
 
 # Grid Engine options
 #
-#$ -N model_eval
+#$ -N train_titan
 #$ -cwd
-#$ -pe gpu 4 
-#$ -l h_vmem=16G
+# -pe gpu 4 
+# -l h_vmem=16G
+#$ -pe gpu-titanx 2
+#$ -l h_vmem=25G
 #$ -l h_rt=03:00:00
 
 # Initialise the modules framework
