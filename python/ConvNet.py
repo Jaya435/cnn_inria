@@ -254,7 +254,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
     df['Valid Acc'] = validAccArr
     df['Train Acc'] = trainAccArr
     print(df)
-    df.to_csv('/bce_loss/batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
+    df.to_csv('bce_loss/batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
     return(train_run_loss,valid_run_loss)
 
 def train_valid_test_split(image_paths, target_paths,batch_size):
