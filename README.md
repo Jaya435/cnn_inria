@@ -13,7 +13,7 @@ For this to work you need Anaconda version 5.0.1. Archived Anaconda repos can be
 
 https://repo.continuum.io/archive/
 
-For the model to work correctl the user needs:
+For the model to work correctly the user needs:
 1. Torch verison 0.4.1
 2. Cuda toolkit version 8.0.61
 
