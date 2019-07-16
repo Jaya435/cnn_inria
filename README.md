@@ -13,6 +13,10 @@ For this to work you need Anaconda version 5.0.1. Archived Anaconda repos can be
 
 https://repo.continuum.io/archive/
 
+For the model to work correctl the user needs:
+1. Torch verison 0.4.1
+2. Cuda toolkit version 8.0.61
+
 User should have a directory containing:
 1. director named 'images' containing named RGB images
 2. directory named 'gt' containing ground truth labels of said images, named the same.
@@ -33,8 +37,7 @@ Use the two specification files to ensure the correct modules are installed in e
 conda create --name mypytorch --file mypytorch-spec-file.txt
 conda create --name gdal --file gdal-spec-file.txt
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
+By ensuring the correct version of Anaconda is installed and then subsequently creating the two environments, the code should have the correct requirements to be run. 
 
 ## Running the model
 
