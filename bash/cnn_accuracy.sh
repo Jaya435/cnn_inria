@@ -1,8 +1,8 @@
 #!/bin/sh
 ###########################################
 #                                         #
-# This job predicts and plots where the   #
-# buildings are on an RGB image.          #
+#     This job loops over saved models    #
+#     and outputs the most accurate       #
 #                                         #
 ###########################################
 
