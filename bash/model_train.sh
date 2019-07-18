@@ -22,7 +22,7 @@ source activate mypytorch2
 
 
 # Read a text file, containing a list of possible combinations#
-input='grid_search_1.txt'
+input='grid_search_96.txt'
 readarray myArray < "$input"
 set -- ${myArray[$SGE_TASK_ID]}
 # submits batch job to SGE engine
