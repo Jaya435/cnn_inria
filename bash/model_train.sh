@@ -27,5 +27,6 @@ readarray myArray < "$input"
 set -- ${myArray[$SGE_TASK_ID]}
 # submits batch job to SGE engine
 echo arch _size is "$1"
-
+echo learning rate is "$2"
+echo batch size is "$3"
 python ${HOME}/python/ConvNet.py --arch_size "$1" --lr "$2" --batch_size "$3" 

@@ -171,7 +171,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
     validAccArr = []
     
     for epoch in range(1, n_epochs+1):
-        
+        epoch_begin = time.time()
         # keep track of training and validation loss
         train_loss = 0.0
         valid_loss = 0.0
@@ -181,6 +181,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
         # train the model #
         ###################
         net.train()
+        print('Begin Training')
         for info in train_loader:
             # send info to cpu or gpu depending on which is available
             data,target = info[0].to(device),info[1].to(device)
@@ -207,6 +208,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
         ######################    
         # validate the model #
         ######################
+        print('Validation Begin')
         net.eval()
         with torch.no_grad():
             correct=0
@@ -235,10 +237,11 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
         validLossArr.append(valid_loss)
         trainAccArr.append(trainAcc)
         validAccArr.append(validAcc)
-        # print training/validation statistics 
+        # print training/validation statistics
+        epoch_finish = time.time()
         print('Epoch: {} \tTrain Loss: {:.6f} \tTrain Acc: {:.6f} \tValidation Loss: {:.6f} \tValid Acc{:.6f}'.format(
             epoch, train_loss,trainAcc,  valid_loss, validAcc))
-
+        print('Time for epoch {}: {}'.format(epoch, epoch_finish - epoch_begin))
         # save model if validation loss has decreased
         if valid_loss <= valid_loss_min:
             print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(
