@@ -6,6 +6,7 @@ import torch
 import itertools as it
 from PIL import Image
 import os
+import errno
 import random
 import glob
 import os.path as osp
@@ -22,11 +23,14 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.transforms.functional as TF
 import time
+import datetime
 import argparse
 from torchsummary import summary
 from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 import pandas as pd
+import pathlib
+
 
 
 
@@ -257,7 +261,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
     df['Valid Acc'] = validAccArr
     df['Train Acc'] = trainAccArr
     print(df)
-    df.to_csv('bce_loss/batch{}lr{}arch{}epochs{}.csv'.format(args.batch_size, args.lr, args.arch_size, args.num_epochs))
+    df.to_csv('{}/batch{}lr{}arch{}epochs{}.csv'.format(results_dir,args.batch_size, args.lr, args.arch_size, args.num_epochs))
     return(train_run_loss,valid_run_loss)
 
 def train_valid_test_split(image_paths, target_paths,batch_size):
@@ -316,8 +320,11 @@ def model_eval(test_loader,net):
 if __name__ == "__main__":
 
     args = parser.parse_args()
-    
-    
+    cwd = os.getcwd()
+    results_dir = '{}/Results_{date:%Y%m%d_%H%M%S}'.format(cwd, date=datetime.datetime.now())
+    pathlib.Path('{}/'.format(results_dir)).mkdir(parents=True, exist_ok=True) 
+
+                                                
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu') 
     
     image_paths = glob.glob(args.path+'images/*.tif') 
@@ -341,8 +348,8 @@ if __name__ == "__main__":
         plt.ylabel('Loss')
         plt.xlabel('Epochs')
         plt.legend()
-        plt.savefig('lr{}net_size{}batch{}epochs{}.png'.
-                    format(args.lr,args.arch_size,args.batch_size,args.num_epochs),bbox_inches='tight')
+        plt.savefig('{}/lr{}net_size{}batch{}epochs{}.png'.
+                    format(results_dir,args.lr,args.arch_size,args.batch_size,args.num_epochs),bbox_inches='tight')
     else:
         net.to(device)
         print(next(net.parameters()).is_cuda)
