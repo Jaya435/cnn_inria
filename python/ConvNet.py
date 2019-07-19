@@ -323,7 +323,8 @@ if __name__ == "__main__":
     train_run_loss,valid_run_loss = [],[]
 
     net = Net(cr=args.arch_size) # resets model
-    criterion = nn.BCELoss()
+    #criterion = nn.BCELoss()
+    criterion = multi_class_cross_entropy_loss_torch()
     optimizer = optim.Adam(net.parameters(), args.lr)
     train_loader, valid_loader, test_loader = train_valid_test_split(image_paths, target_paths,args.batch_size)
     print('Data Load Successful')
