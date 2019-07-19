@@ -8,7 +8,7 @@
 # -l h_vmem=16G
 #$ -pe gpu-titanx 2
 #$ -l h_vmem=25G
-#$ -l h_rt=03:00:00
+#$ -l h_rt=12:00:00
 
 # Initialise the modules framework
 . /etc/profile.d/modules.sh

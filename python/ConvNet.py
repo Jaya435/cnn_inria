@@ -342,7 +342,7 @@ if __name__ == "__main__":
     else:
         net.to(device)
         print(next(net.parameters()).is_cuda)
-        train_run_loss,valid_run_loss = train_eval(train_loader,valid_loader,args.num_epochs, net,optimizer,args.model_dict)
+        train_run_loss,valid_run_loss = train_eval(train_loader,valid_loader,args.num_epochs, net,optimizer,criterion, args.model_dict)
     #load best model
     net = Net(cr=args.arch_size)
     net = nn.DataParallel(net)
