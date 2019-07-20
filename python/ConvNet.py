@@ -38,8 +38,6 @@ parser.add_argument('--batch_size',help='select batch size', type=int,default=12
 parser.add_argument('--lr',help='learning rate for optimizer',type=float,default=0.001)
 parser.add_argument('--num_epochs',help='Number of epochs',type=int,default=100) 
 parser.add_argument('--arch_size', help='inital depth of convolution', type=int,default=64)
-parser.add_argument('--model_dict',help='Path to where model best state is saved',type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/')
-
 class SegBlockEncoder(nn.Module):
     def __init__(self,in_channel,out_channel, kernel=4,stride=2,pad=1):
         super().__init__()
@@ -249,7 +247,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
             print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(
             valid_loss_min,
             valid_loss))
-            torch.save(model.state_dict(), model_dict+'model_inria_batch{}_lr{}_arch{}_epochs{}.pt'.format(
+            torch.save(model.state_dict(), model_dict+'/model_inria_batch{}_lr{}_arch{}_epochs{}.pt'.format(
                 args.batch_size,args.lr,args.arch_size,args.num_epochs))
             valid_loss_min = valid_loss
     finish = time.time()
@@ -338,7 +336,7 @@ if __name__ == "__main__":
         print("Let us use",torch.cuda.device_count(),"GPUS!")
         net = nn.DataParallel(net)
         net.to(device)
-        train_run_loss,valid_run_loss = train_eval(train_loader, valid_loader, args.num_epochs, net,optimizer,criterion,args.model_dict)
+        train_run_loss,valid_run_loss = train_eval(train_loader, valid_loader, args.num_epochs, net,optimizer,criterion,args.out_dir)
         plt.plot(train_run_loss,label='Training Loss')
         plt.plot(valid_run_loss,label='Validation Loss')
         plt.ylabel('Loss')
@@ -349,12 +347,12 @@ if __name__ == "__main__":
     else:
         net.to(device)
         print(next(net.parameters()).is_cuda)
-        train_run_loss,valid_run_loss = train_eval(train_loader,valid_loader,args.num_epochs, net,optimizer,criterion, args.model_dict)
+        train_run_loss,valid_run_loss = train_eval(train_loader,valid_loader,args.num_epochs, net,optimizer,criterion, args.out_dir)
     #load best model
     net = Net(cr=args.arch_size)
     net = nn.DataParallel(net)
     net.to(device)
-    net.load_state_dict(torch.load(args.model_dict+'model_inria_batch{}_lr{}_arch{}_epochs{}.pt'.format(args.batch_size,args.lr,args.arch_size,args.num_epochs)))
+    net.load_state_dict(torch.load(args.out_dir+'/model_inria_batch{}_lr{}_arch{}_epochs{}.pt'.format(args.batch_size,args.lr,args.arch_size,args.num_epochs)))
     model_eval(test_loader,net) 
     
     
