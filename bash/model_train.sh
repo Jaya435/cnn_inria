@@ -2,13 +2,13 @@
 
 # Grid Engine options
 #
-#$ -N train_titan
+#$ -N train-titan
 #$ -cwd
-# -pe gpu 4 
-# -l h_vmem=16G
+# -pe gpu 2 
+# -l h_vmem=32G
 #$ -pe gpu-titanx 2
 #$ -l h_vmem=25G
-#$ -l h_rt=12:00:00
+#$ -l h_rt=03:00:00
 
 # Initialise the modules framework
 . /etc/profile.d/modules.sh
@@ -19,8 +19,8 @@ ulimit -v
 # User specified commands go below here
 module load anaconda/5.0.1
 source activate mypytorch2
-
-
+outdir="/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/Results_"`date +"%d%m%Y_%H%M%S"`
+mkdir ${outdir}
 # Read a text file, containing a list of possible combinations#
 input='grid_search_96.txt'
 readarray myArray < "$input"
@@ -29,4 +29,4 @@ set -- ${myArray[$SGE_TASK_ID]}
 echo arch _size is "$1"
 echo learning rate is "$2"
 echo batch size is "$3"
-python ${HOME}/python/ConvNet.py --arch_size "$1" --lr "$2" --batch_size "$3" 
+python ${HOME}/python/ConvNet.py --out_dir ${outdir} --arch_size "$1" --lr "$2" --batch_size "$3"
