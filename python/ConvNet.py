@@ -23,19 +23,17 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.transforms.functional as TF
 import time
-import datetime
 import argparse
 from torchsummary import summary
 from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 import pandas as pd
-import pathlib
-
 
 
 
 parser = argparse.ArgumentParser(description='Main script to implement the CNN')
 parser.add_argument('--path',help='path to train directory',type=str,default='/exports/eddie/scratch/s1217815/AerialImageDataset/train/')
+parser.add_argument('--out_dir',help='path to results directory',type=str,default='/home/s1217815')
 parser.add_argument('--batch_size',help='select batch size', type=int,default=128)
 parser.add_argument('--lr',help='learning rate for optimizer',type=float,default=0.001)
 parser.add_argument('--num_epochs',help='Number of epochs',type=int,default=100) 
@@ -321,9 +319,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     cwd = os.getcwd()
-    results_dir = '{}/Results_{date:%Y%m%d_%H%M%S}'.format(cwd, date=datetime.datetime.now())
-    pathlib.Path('{}/'.format(results_dir)).mkdir(parents=True, exist_ok=True) 
-
+    results_dir = args.out_dir
                                                 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu') 
     
