@@ -20,14 +20,17 @@ For the model to work correctly the user needs:
 User should have a directory containing:
 1. director named 'images' containing named RGB images
 2. directory named 'gt' containing ground truth labels of said images, named the same.
-
+```
 train    
+│
 └───images
 │   │   file011.tif
-│   │   file012.tif 
+│   │   file012.tif
+│   
 └───gt
     │   file011.tif
     │   file012.tif
+```
 
 ### Data
 
@@ -109,11 +112,10 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Thomas Richmond** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
