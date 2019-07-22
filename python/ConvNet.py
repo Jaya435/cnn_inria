@@ -29,8 +29,6 @@ from torch.autograd import Variable
 from torch.utils.data.sampler import SubsetRandomSampler
 import pandas as pd
 
-
-
 parser = argparse.ArgumentParser(description='Main script to implement the CNN')
 parser.add_argument('--path',help='path to train directory',type=str,default='/exports/eddie/scratch/s1217815/AerialImageDataset/train/')
 parser.add_argument('--out_dir',help='path to results directory',type=str,default='/home/s1217815')
@@ -38,6 +36,8 @@ parser.add_argument('--batch_size',help='select batch size', type=int,default=12
 parser.add_argument('--lr',help='learning rate for optimizer',type=float,default=0.001)
 parser.add_argument('--num_epochs',help='Number of epochs',type=int,default=100) 
 parser.add_argument('--arch_size', help='inital depth of convolution', type=int,default=64)
+
+
 class SegBlockEncoder(nn.Module):
     def __init__(self,in_channel,out_channel, kernel=4,stride=2,pad=1):
         super().__init__()
@@ -309,7 +309,7 @@ def model_eval(test_loader,net):
         stop = time.time()   
         result = ('Accuracy: {:.3f} %, Time: {:.2f}s, Batch_Size: {}, Learning Rate: {}, Initial Architecture: {}'.format(((correct / total)*100),(stop-start),args.batch_size, args.lr, args.arch_size))
         print(result)
-        f = open('results_120.txt','a')
+        f = open(results_dir+'/results_120.txt','a')
         f.write(result + '\n')
         f.close()
         
