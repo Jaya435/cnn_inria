@@ -34,7 +34,9 @@ train
 
 ### Data
 
-All of the data used in this project can be found at https://project.inria.fr/aerialimagelabeling/download/.
+All of the data used in this project can be found at:
+
+https://project.inria.fr/aerialimagelabeling/download/.
 
 Emmanuel Maggiori, Yuliya Tarabalka, Guillaume Charpiat and Pierre Alliez. “Can Semantic Labeling Methods Generalize to Any City? The Inria Aerial Image Labeling Benchmark”. IEEE International Geoscience and Remote Sensing Symposium (IGARSS). 2017.
 
