@@ -21,6 +21,22 @@ User should have a directory containing:
 1. director named 'images' containing named RGB images
 2. directory named 'gt' containing ground truth labels of said images, named the same.
 
+train    
+│
+└───images
+│   │   file011.tif
+│   │   file012.tif
+│   
+└───gt
+    │   file011.tif
+    │   file012.tif
+
+### Data
+
+All of the data used in this project can be found at https://project.inria.fr/aerialimagelabeling/download/.
+
+Emmanuel Maggiori, Yuliya Tarabalka, Guillaume Charpiat and Pierre Alliez. “Can Semantic Labeling Methods Generalize to Any City? The Inria Aerial Image Labeling Benchmark”. IEEE International Geoscience and Remote Sensing Symposium (IGARSS). 2017.
+
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
