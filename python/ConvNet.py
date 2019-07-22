@@ -287,7 +287,7 @@ def train_valid_test_split(image_paths, target_paths,batch_size):
     test_loader = DataLoader(dataset, batch_size, num_workers=0, sampler=test_sampler)
     return (train_loader, valid_loader, test_loader)
 
-def model_eval(test_loader,net):
+def model_eval(test_loader,net, batch_size, lr, arch_size, results_dir):
     net.eval()
     with torch.no_grad():
         count = 0
@@ -307,7 +307,7 @@ def model_eval(test_loader,net):
             correct += (predicted == labels).sum().item()
         print('Correct: {}, Total: {}'.format(correct,total))
         stop = time.time()   
-        result = ('Accuracy: {:.3f} %, Time: {:.2f}s, Batch_Size: {}, Learning Rate: {}, Initial Architecture: {}'.format(((correct / total)*100),(stop-start),args.batch_size, args.lr, args.arch_size))
+        result = ('Accuracy: {:.3f} %, Time: {:.2f}s, Batch_Size: {}, Learning Rate: {}, Initial Architecture: {}'.format(((correct / total)*100),(stop-start),batch_size, lr, arch_size))
         print(result)
         f = open(results_dir+'/results_120.txt','a')
         f.write(result + '\n')
@@ -353,6 +353,7 @@ if __name__ == "__main__":
     net = nn.DataParallel(net)
     net.to(device)
     net.load_state_dict(torch.load(args.out_dir+'/model_inria_batch{}_lr{}_arch{}_epochs{}.pt'.format(args.batch_size,args.lr,args.arch_size,args.num_epochs)))
-    model_eval(test_loader,net) 
+    model_eval(test_loader,net, args.batch_size, args.lr, args.batch_size,results_dir)
+ 
     
     
