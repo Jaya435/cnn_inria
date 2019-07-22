@@ -22,11 +22,9 @@ User should have a directory containing:
 2. directory named 'gt' containing ground truth labels of said images, named the same.
 
 train    
-│
 └───images
 │   │   file011.tif
-│   │   file012.tif
-│   
+│   │   file012.tif 
 └───gt
     │   file011.tif
     │   file012.tif
