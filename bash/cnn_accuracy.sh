@@ -9,7 +9,7 @@
 # Grid Engine Options
 #$ -N Accuracy
 #$ -cwd
-#$ -l h_rt=01:00:00
+#$ -l h_rt=02:00:00
 #$ -pe sharedmem 16
 #$ -l h_vmem=8G
 
