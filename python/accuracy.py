@@ -34,7 +34,6 @@ def model_accuracy(models,image_paths, target_paths, results_dir):
         #net.cuda()
         accuracy = ConvNet.model_eval(test_loader, net,batch, lr, net_size, results_dir)
         accList.append(accuracy)
-    print(accList)
     maxInd = accList.index(max(accList))
     print('Highest accuracy: {} for model: {}'.format(accList[maxInd],models[maxInd]))
     models[maxInd]

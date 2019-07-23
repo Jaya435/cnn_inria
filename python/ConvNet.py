@@ -312,7 +312,7 @@ def model_eval(test_loader,net, batch_size, lr, arch_size, results_dir):
         f = open(results_dir+'/results_120.txt','a')
         f.write(result + '\n')
         f.close()
-        
+    return ((correct/total)*100)
 if __name__ == "__main__":
 
     args = parser.parse_args()
@@ -353,7 +353,7 @@ if __name__ == "__main__":
     net = nn.DataParallel(net)
     net.to(device)
     net.load_state_dict(torch.load(args.out_dir+'/model_inria_batch{}_lr{}_arch{}_epochs{}.pt'.format(args.batch_size,args.lr,args.arch_size,args.num_epochs)))
-    model_eval(test_loader,net, args.batch_size, args.lr, args.batch_size,results_dir)
+    accuracy = model_eval(test_loader,net, args.batch_size, args.lr, args.batch_size,results_dir)
  
     
     
