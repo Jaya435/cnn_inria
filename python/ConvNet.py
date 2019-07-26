@@ -329,7 +329,8 @@ if __name__ == "__main__":
     net = Net(cr=args.arch_size) # resets model
     criterion = nn.BCELoss()
     #criterion = multi_class_cross_entropy_loss_torch()
-    optimizer = optim.Adam(net.parameters(), args.lr)
+    optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=0.9)
+    #optimizer = optim.Adam(net.parameters(), args.lr)
     train_loader, valid_loader, test_loader = train_valid_test_split(image_paths, target_paths,args.batch_size)
     print('Data Load Successful')
     if torch.cuda.device_count() > 1:

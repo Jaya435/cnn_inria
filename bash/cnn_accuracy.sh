@@ -18,9 +18,9 @@
 
 # Check amount of memory (in kbytes) as seen by the job
 ulimit -v
-WORKING_DIR="/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/"
+WORKING_DIR="/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531"
 # User specified commands go below here
 module load anaconda/5.0.1
 source activate mypytorch
 # Run the program
-python ${HOME}/python/accuracy.py --out_dir ${WORKING_DIR} --model_path /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/Results_22072019_085230
+python ${HOME}/python/accuracy.py --out_dir ${WORKING_DIR} --model_path ${WORKING_DIR}

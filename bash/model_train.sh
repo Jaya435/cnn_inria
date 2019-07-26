@@ -33,3 +33,6 @@ echo arch _size is "$1"
 echo learning rate is "$2"
 echo batch size is "$3"
 python ${HOME}/python/ConvNet.py --out_dir ${WORKING_DIR} --arch_size "$1" --lr "$2" --batch_size "$3"
+#python ${HOME}/python/ConvNet.py --out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531 --arch_size 2 --lr 0.1 --batch_size 16
+#python ${HOME}/python/ConvNet.py --out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531 --arch_size 2 --lr 0.1 --batch_size 32
+#python ${HOME}/python/ConvNet.py --out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531 --arch_size 2 --lr 0.01 --batch_size 128

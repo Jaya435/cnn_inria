@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(description='Predict the class of each pixel fo
 parser.add_argument('-model',type=str,default='model_inria.pt',help='A saved pytorch model')
 parser.add_argument('-inpfile',type=str,default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/kitsap31.tif',help='Path and filename of image to be classified')
 parser.add_argument('-mask',type=str,default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/gt/kitsap31.tif',help='Path to mask in train folder')
-
+parser.add_argument('out_dir', type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results', help='Path to output directory')
 
 
 def image_loader(image_name):
@@ -34,7 +34,7 @@ def image_loader(image_name):
     return image,RGB_image  #assumes that you're using GPU
 
 
-def image_plotter(image,RGB_image,mask,fname):
+def image_plotter(image,RGB_image,mask,fname, out_dir):
     output = net(image)
     variable = Variable(output)
     if torch.cuda.is_available():
@@ -56,7 +56,7 @@ def image_plotter(image,RGB_image,mask,fname):
     ax2.legend(handles=patches, bbox_to_anchor=(1.45, 1), loc="upper right", borderaxespad=0.,facecolor="plum" )
     ax1.imshow(RGB_image)
     ax3.imshow(mask,cmap="binary_r")
-    plt.savefig('/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/predict/Predicted_{}.png'.format(fname),bbox_inches='tight',dpi=300)
+    plt.savefig('{}/Predicted_{}.png'.format(out_dir,fname),bbox_inches='tight',dpi=300)
 
 if __name__ == '__main__':
     args=parser.parse_args()
@@ -72,4 +72,4 @@ if __name__ == '__main__':
     net.load_state_dict(torch.load(args.model,map_location=lambda storage, loc: storage))
     loader = transforms.Compose([ transforms.ToTensor()])
     image,RGB_image = image_loader(args.inpfile)
-    image_plotter(image,RGB_image,mask,fname)
+    image_plotter(image,RGB_image,mask,fname, args.out_dir)
