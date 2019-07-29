@@ -27,6 +27,6 @@ source activate mypytorch
 for FILE in /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/*.tif;
 do
     fname=$(basename $FILE)
-    python ${HOME}/python/predict_compare.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531/model_inria_batch16_lr0.1_arch2_epochs100.pt -inpfile /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/"$fname" -mask /exports/eddie/scratch/s1217815/AerialImageDataset/train/gt/"$fname" -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531
+    python ${HOME}/python/predict_compare.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088/model_inria_batch64_lr0.0001_arch8_epochs100.pt -inpfile /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/"$fname" -mask /exports/eddie/scratch/s1217815/AerialImageDataset/train/gt/"$fname" -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088
 done
 #./test_model.py -model model_inria.pt

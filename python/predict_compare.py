@@ -19,11 +19,12 @@ parser = argparse.ArgumentParser(description='Predict the class of each pixel fo
 parser.add_argument('-model',type=str,default='model_inria.pt',help='A saved pytorch model')
 parser.add_argument('-inpfile',type=str,default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/kitsap31.tif',help='Path and filename of image to be classified')
 parser.add_argument('-mask',type=str,default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/gt/kitsap31.tif',help='Path to mask in train folder')
-parser.add_argument('out_dir', type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results', help='Path to output directory')
+parser.add_argument('-out_dir', type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results', help='Path to output directory')
 
 
 def image_loader(image_name):
     """load image, returns cuda tensor"""
+    trans = transforms.ToPILImage()
     image = Image.open(image_name)
     image = loader(image).float()
     RGB_image = trans(image)

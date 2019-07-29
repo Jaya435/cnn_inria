@@ -18,7 +18,7 @@
 
 # Check amount of memory (in kbytes) as seen by the job
 ulimit -v
-WORKING_DIR="/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531"
+WORKING_DIR="/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088"
 # User specified commands go below here
 module load anaconda/5.0.1
 source activate mypytorch

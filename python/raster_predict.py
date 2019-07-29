@@ -19,7 +19,8 @@ import ConvNet
 
 parser = argparse.ArgumentParser(description='Predict the class of each pixel for an image and save the result. Images taken from train folder and include mask')
 parser.add_argument('-model',type=str,default='model_inria.pt',help='A saved pytorch model')
-parser.add_argument('-inpfile',type=str,default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/kitsap31.tif',help='Path and filename of image to be classified')      
+parser.add_argument('-inpfile',type=str,default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/kitsap31.tif',help='Path and filename of image to be classified')
+parser.add_argument('-out_dir', type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results', help='Output directory')      
 
 def raster2array(rasterfn):
     raster=gdal.Open(rasterfn)
@@ -73,7 +74,7 @@ if __name__ == '__main__':
     rasterfn = args.inpfile
     base = os.path.basename(rasterfn) 
     fname = os.path.splitext(base)[0]
-    newRasterfn='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/predict_raster/predict_{}.tif'.format(fname)
+    newRasterfn='{}/predict_{}.tif'.format(args.out_dir,fname)
     base_model = os.path.basename(args.model)
     match = re.search('arch(\d+)',base_model)
     net_size = match.group(1)

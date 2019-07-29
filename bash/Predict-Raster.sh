@@ -18,13 +18,12 @@
 
 # Check amount of memory (in kbytes) as seen by the job
 ulimit -v
-wdir = 
 # User specified commands go below here
 module load anaconda/5.0.1
-source activate gdal
+source activate mypytorch
 # Run the program
 dir='/exports/eddie/scratch/s1217815/AerialImageDataset/train/images'
 find $dir -type f > filename.txt
 input='filename.txt'
 readarray myArray < ${input}
-python ${HOME}/python/raster_predict.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/saved_models/model_inria_batch2_lr0.01_arch16_epochs100.pt -inpfile ${myArray[$SGE_TASK_ID-1]}
+python ${HOME}/python/raster_predict.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531/model_inria_batch64_lr0.001_arch2_epochs100.pt -inpfile ${myArray[$SGE_TASK_ID-1]} -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531
