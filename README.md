@@ -150,11 +150,6 @@ optional arguments:
   -out_dir OUT_DIR  Output directory
 ```
 
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [PyTorch](https://pytorch.org/get-started/locally/ - The framework used to construct CNN
@@ -162,10 +157,6 @@ Add additional notes about how to deploy this on a live system
 ## Authors
 
 * **Thomas Richmond** - *Initial work* - [cnn_inria](https://github.com/s1217815-ed-19/cnn_inria)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
