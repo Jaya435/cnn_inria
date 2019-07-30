@@ -29,8 +29,8 @@ def image_loader(image_name):
     image = loader(image).float()
     RGB_image = trans(image)
     image = Variable(image, requires_grad=True)
-    if torch.cuda.is_available():                                                                     
-        image = image.cuda()
+    #if torch.cuda.is_available():                                                                     
+    #    image = image.cuda()
     image = image.unsqueeze(0)  #this is for VGG, may not be needed for ResNet
     return image,RGB_image  #assumes that you're using GPU
 
@@ -45,6 +45,7 @@ def image_plotter(image,RGB_image,mask,fname, out_dir):
     b = num.numpy()
     final_prediction=b[:,:,0]
     labels = (final_prediction > 0.5).astype(np.int)
+    labels = 1 - labels
     fig=plt.figure(figsize=(15, 10), dpi= 300, facecolor='w', edgecolor='k')
     ax1 = plt.subplot(1,3,1)
     ax1.set_title('Original RGB_image of {}'.format(fname))
@@ -53,10 +54,10 @@ def image_plotter(image,RGB_image,mask,fname, out_dir):
     ax3=plt.subplot(1,3,2)
     ax3.set_title('Mask of buildings in {}'.format(fname))
     im = ax2.imshow(labels, interpolation='none',cmap="binary")
-    patches = [(mpatches.Patch(color='black', label="No Buildings")),(mpatches.Patch(color='white', label="Buildings"))]
+    patches = [(mpatches.Patch(color='white', label="Buildings")),(mpatches.Patch(color='black', label="No Buildings"))]
     ax2.legend(handles=patches, bbox_to_anchor=(1.45, 1), loc="upper right", borderaxespad=0.,facecolor="plum" )
     ax1.imshow(RGB_image)
-    ax3.imshow(mask,cmap="binary_r")
+    ax3.imshow(mask,cmap="binary")
     plt.savefig('{}/Predicted_{}.png'.format(out_dir,fname),bbox_inches='tight',dpi=300)
 
 if __name__ == '__main__':

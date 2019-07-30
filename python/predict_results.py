@@ -6,13 +6,16 @@ import numpy as np
 import os, glob
 import re
 
+cwd = os.getcwd()
+print(cwd)
+
 filenames = ('austin20', 'kitsap30', 'tyrol-w15','chicago10','vienna15')
 
 predArray, imgArray, gtArray = [],[],[]
-for file in filenames:
-    predArray.append(Image.open('/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/predict_raster/predict_{}.tif'.format(file)))
-    imgArray.append(Image.open('/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/{}.tif'.format(file))) 
-    gtArray.append(Image.open('/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/gt/{}.tif'.format(file))) 
+for f in filenames:
+    predArray.append(Image.open('{}/predict_{}.tif'.format(cwd,f)))
+    imgArray.append(Image.open('/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/{}.tif'.format(f))) 
+    gtArray.append(Image.open('/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/gt/{}.tif'.format(f))) 
     bigArray = imgArray + gtArray + predArray
 
 fileList=[]

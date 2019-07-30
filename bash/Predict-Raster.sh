@@ -26,4 +26,4 @@ dir='/exports/eddie/scratch/s1217815/AerialImageDataset/train/images'
 find $dir -type f > filename.txt
 input='filename.txt'
 readarray myArray < ${input}
-python ${HOME}/python/raster_predict.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531/model_inria_batch64_lr0.001_arch2_epochs100.pt -inpfile ${myArray[$SGE_TASK_ID-1]} -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2542531
+python ${HOME}/python/raster_predict.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088/model_inria_batch128_lr0.0001_arch64_epochs100.pt -inpfile ${myArray[$SGE_TASK_ID-1]} -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088
