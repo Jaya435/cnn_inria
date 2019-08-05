@@ -98,35 +98,67 @@ optional arguments:
                         Path to where model is saved, extension should be .pt
 
 ```
-## Deployment
+### Stage Three
+Edit the bash/cnn_accuracy.sh to point to the correct directory, then run script to determine which model is the most accurate.
+```
+python ${HOME}/python/accuracy.py --out_dir ${WORKING_DIR} --model_path ${WORKING_DIR}
 
-Add additional notes about how to deploy this on a live system
+usage: accuracy.py [-h] [--path PATH] [--model_path MODEL_PATH]
+                   [--out_dir OUT_DIR]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --path PATH           path to train directory
+  --model_path MODEL_PATH
+                        path to saved models
+  --out_dir OUT_DIR     path to results directory
+```
+### Stage Four
+Edit the bash/Predict-Image.sh to point to the model that produces the highest accuracy as determine in Stage Three, then run script to predict on the one image from the train dataset using that saved model in order to quality to check the results.
+```
+python ~/python/predict_compare.py -model /path/to/best/model -inpfile /path/to/rgb/raster -out_dir /path/to/save/results -mask /path/to/gt/raster
+
+
+usage: predict_compare.py [-h] [-model MODEL] [-inpfile INPFILE] [-mask MASK]
+                          [-out_dir OUT_DIR]
+
+Predict the class of each pixel for an image and save the result. Images taken
+from train folder and include mask
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -model MODEL      A saved pytorch model
+  -inpfile INPFILE  Path and filename of image to be classified
+  -mask MASK        Path to mask in train folder
+  -out_dir OUT_DIR  Path to output directory
+```
+### Stage Five
+Edit the bash/Predict-Raster.sh to point to the model that produces the highest accuracy as determine in Stage Three, then run script to predict all the images from the train or test dataset using that saved model.
+```
+python ${HOME}/python/raster_predict.py -model /path/to/best/model -inpfile path/to/rgb/raster -out_dir path/to/save/results
+
+usage: raster_predict.py [-h] [-model MODEL] [-inpfile INPFILE]
+                         [-out_dir OUT_DIR]
+
+Predict the class of each pixel for an image and save the result. Images taken
+from train folder.
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -model MODEL      A saved pytorch model
+  -inpfile INPFILE  Path and filename of image to be classified
+  -out_dir OUT_DIR  Output directory
+```
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
+* [PyTorch](https://pytorch.org/get-started/locally/ - The framework used to construct CNN
 
 ## Authors
 
-* **Thomas Richmond** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+* **Thomas Richmond** - *Initial work* - [cnn_inria](https://github.com/s1217815-ed-19/cnn_inria)
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Thanks to Levi for helping build the inital framework
+* Inspire by a desire to simplify Land Use Classification for Remote Sensing Scientists.
