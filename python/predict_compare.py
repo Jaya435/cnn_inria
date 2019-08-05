@@ -29,8 +29,8 @@ def image_loader(image_name):
     image = loader(image).float()
     RGB_image = trans(image)
     image = Variable(image, requires_grad=True)
-    #if torch.cuda.is_available():                                                                     
-    #    image = image.cuda()
+    if torch.cuda.is_available():                                                                     
+        image = image.cuda()
     image = image.unsqueeze(0)  #this is for VGG, may not be needed for ResNet
     return image,RGB_image  #assumes that you're using GPU
 

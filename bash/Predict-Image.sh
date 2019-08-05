@@ -24,10 +24,10 @@ module load anaconda/5.0.1
 source activate mypytorch
 # Run the program
 
-#for FILE in /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/*.tif;
-#do
-#    fname=$(basename $FILE)
-#    python ${HOME}/python/predict_compare.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088/model_inria_batch64_lr0.0001_arch8_epochs100.pt -inpfile /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/"$fname" -mask /exports/eddie/scratch/s1217815/AerialImageDataset/train/gt/"$fname" -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088
-#done
+for FILE in /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/*.tif;
+do
+    fname=$(basename $FILE)
+    python ${HOME}/python/predict_compare.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088/model_inria_batch64_lr0.0001_arch16_epochs100.pt -inpfile /exports/eddie/scratch/s1217815/AerialImageDataset/train/images/"$fname" -mask /exports/eddie/scratch/s1217815/AerialImageDataset/train/gt/"$fname" -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088
+done
 #./test_model.py -model model_inria.pt
-python ~/python/predict_compare.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088/model_inria_batch128_lr0.0001_arch64_epochs100.pt -inpfile /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/austin20.tif -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/inria_test -mask /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/gt/austin20.tif
+#python ~/python/predict_compare.py -model /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results/2564088/model_inria_batch64_lr0.0001_arch16_epochs100.pt -inpfile /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/images/austin20.tif -out_dir /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/inria_test -mask /exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/AerialImageDataset/train/gt/austin20.tif
