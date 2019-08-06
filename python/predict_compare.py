@@ -23,7 +23,7 @@ parser.add_argument('-out_dir', type=str, default='/exports/csce/eddie/geos/grou
 
 
 def image_loader(image_name):
-    """load image, returns cuda tensor"""
+    """load image, returns tensor ad RGB image"""
     trans = transforms.ToPILImage()
     image = Image.open(image_name)
     image = loader(image).float()
@@ -36,6 +36,7 @@ def image_loader(image_name):
 
 
 def image_plotter(image,RGB_image,mask,fname, out_dir):
+    '''Plots the original RGB image, the ground truth and the predicted results'''
     output = net(image)
     variable = Variable(output)
     if torch.cuda.is_available():
