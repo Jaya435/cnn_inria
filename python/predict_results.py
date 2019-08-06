@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+### Script to quickly select five images from within the training dataset and the corresponding predicted results to compare them in a
+### grid
 from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
