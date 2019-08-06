@@ -23,10 +23,12 @@ parser.add_argument('-inpfile',type=str,default='/exports/csce/eddie/geos/groups
 parser.add_argument('-out_dir', type=str, default='/exports/csce/eddie/geos/groups/geos_cnn_imgclass/data/Results', help='Output directory')      
 
 def raster2array(rasterfn):
+    '''Converts raster to an array'''
     raster=gdal.Open(rasterfn)
     return raster.ReadAsArray()
 
 def array2raster(rasterfn,newRasterfn,array):
+    '''Converts an array to a raster, copying geo information from another file'''
     raster = gdal.Open(rasterfn)
     geotransform = raster.GetGeoTransform()
     originX = geotransform[0]
