@@ -60,8 +60,8 @@ for city in cities:
     y_pred = pd.Series(prediction.ravel(),name='Prediction')
     df_confusion = pd.crosstab(y_actu, y_pred, rownames=['Actual'], colnames=['Predicted'])
     #df_conf_norm = df_confusion / df_confusion.sum(axis=1)
-    df_conf.to_csv('{}_confusion_matrix_not_norm.csv'.format(city))
-    plot_confusion_matrix(df_conf,title='{}_Confusion_matrix_not_norm.png'.format(city))
+    df_confusion.to_csv('{}_confusion_matrix_not_norm.csv'.format(city))
+    plot_confusion_matrix(df_confusion,title='{}_Confusion_matrix_not_norm.png'.format(city))
     del y_actu
     del y_pred
     del target
