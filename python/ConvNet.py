@@ -39,6 +39,8 @@ parser.add_argument('--arch_size', help='inital depth of convolution', type=int,
 
 
 class SegBlockEncoder(nn.Module):
+    '''Encoder part of the model, user could redefine the kernel, stride and pad
+    to adust how the data is transformed'''
     def __init__(self,in_channel,out_channel, kernel=4,stride=2,pad=1):
         super().__init__()
         self.model = nn.Sequential(
@@ -54,6 +56,7 @@ class SegBlockEncoder(nn.Module):
         return y
 
 class SegBlockDecoder(nn.Module):
+    ''' Same as encoder but tranposes the data in the opposite direction, varables should match'''
     def __init__(self,in_channel,out_channel, kernel=4,stride=2,pad=1):
         super().__init__()
         self.model = nn.Sequential(
@@ -68,6 +71,8 @@ class SegBlockDecoder(nn.Module):
         return y
 
 class Net(nn.Module):
+    ''' Class to bring together encoder and decoder parts of the model and outputs the loss as 
+    an image is fed through. Layers can be removed or deleted depending on intial size of image'''
     def __init__(self,cr=2):
         self.cr = cr
         super(Net,self).__init__()
@@ -115,7 +120,7 @@ def multi_class_cross_entropy_loss_torch(predictions, labels):
     return loss
 
 class BuildingsDataset(Dataset):
-    """INRIA buildings dataset"""
+    """INRIA dataset class, randomly transforms the image and the corresponding masked layer"""
     
     def __init__(self,images_dir,gt_dir,train=True):
         """
@@ -261,6 +266,7 @@ def train_eval(train_loader, valid_loader, n_epochs, model, optimizer,criterion,
     return(train_run_loss,valid_run_loss)
 
 def train_valid_test_split(image_paths, target_paths,batch_size):
+    '''Creates a random 60:20:20 train, valid, test split of the training dataset'''
     dataset = BuildingsDataset(image_paths, target_paths)
     validation_split = .4
     test_split = .2
@@ -288,6 +294,7 @@ def train_valid_test_split(image_paths, target_paths,batch_size):
     return (train_loader, valid_loader, test_loader)
 
 def model_eval(test_loader,net, batch_size, lr, arch_size, results_dir):
+    '''Evaluates the accuracy of the model on the test dataset'''
     net.eval()
     with torch.no_grad():
         count = 0
