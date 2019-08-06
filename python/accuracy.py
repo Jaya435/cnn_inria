@@ -15,6 +15,7 @@ parser.add_argument('--model_path', help='path to saved models',type=str, defaul
 parser.add_argument('--out_dir',help='path to results directory',type=str,default='/home/s1217815') 
 
 def model_accuracy(models,image_paths, target_paths, results_dir):
+    '''Returns filename of the model that results in the highest accuracy on the test dataset'''
     accList = []
     for model in models:
         print ('Path to model {}'.format(model))
@@ -40,6 +41,7 @@ def model_accuracy(models,image_paths, target_paths, results_dir):
     return maxInd
 
 def get_batch(model):
+    '''Rerieves the batch size from the filename'''
     match = re.search('batch(\d+)',model)
     batch_size = match.group(1)
     batch_size = int(batch_size)
